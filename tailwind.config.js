@@ -7,10 +7,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#021A0F',
-        'surface': '#063320',
-        'secondary-surface': '#0A4A2A',
-        'accent-green': '#1F6A3B',
+        'primary': '#001830',
+        'surface': '#001028',
+        'secondary-surface': '#082040',
+        'accent-green': '#143D73',
         'gold': '#D4AF37',
         'gold-dark': '#B8860B',
         'gold-highlight': '#F4D03F',

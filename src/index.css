@@ -16,8 +16,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: 
-    radial-gradient(circle at 70% 30%, rgba(184, 134, 11, 0.35), transparent 60%),
-    linear-gradient(135deg, #000000 0%, #011C10 30%, #064024 80%, #1F6A3B 100%);
+    radial-gradient(circle at 70% 30%, rgba(212, 175, 55, 0.35), transparent 60%),
+    linear-gradient(135deg, #001028 0%, #001830 30%, #082040 70%, #143D73 100%);
   background-attachment: fixed;
   color: #F8F8F8;
   min-height: 100vh;
