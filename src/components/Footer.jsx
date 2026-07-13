@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="bg-surface/50 backdrop-blur-3xl border-t border-glass-border shadow-[0_-10px_30px_rgba(212,175,55,0.05)] text-text-primary pt-24 overflow-hidden relative z-10">
+    <footer className="bg-surface/50 backdrop-blur-3xl border-t border-glass-border shadow-[0_-10px_30px_rgba(212,175,55,0.05)] text-text-primary pt-10 overflow-hidden relative z-10">
       
       {/* Top subtle reflection */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-8">
           
           {/* Left: Brand Description */}
           <div className="md:col-span-4 flex flex-col">

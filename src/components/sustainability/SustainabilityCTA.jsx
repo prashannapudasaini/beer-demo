@@ -3,30 +3,30 @@ import { motion } from 'framer-motion';
 
 export default function SustainabilityCTA() {
   return (
-    <section className="relative py-40 z-10 overflow-hidden flex items-center justify-center border-t border-glass-border">
+    <section className="relative py-20 z-10 overflow-hidden flex items-center justify-center border-t border-glass-border">
       {/* Background */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="/snowy_mountains.png" 
-          alt="Sunset Silhouette" 
-          className="w-full h-full object-cover opacity-30 mix-blend-overlay filter sepia-[0.3] hue-rotate-[-30deg]" 
+        <img
+          src="/snowy_mountains.png"
+          alt="Sunset Silhouette"
+          className="w-full h-full object-cover opacity-30 mix-blend-overlay filter sepia-[0.3] hue-rotate-[-30deg]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent"></div>
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-5xl md:text-7xl font-serif font-bold text-text-primary mb-6"
         >
-          Brewing a <br/>
+          Brewing a <br />
           <span className="text-gold italic">Better Tomorrow.</span>
         </motion.h2>
 
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -36,7 +36,7 @@ export default function SustainabilityCTA() {
           Every bottle represents our commitment to quality, responsibility, and the future of our planet.
         </motion.p>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
