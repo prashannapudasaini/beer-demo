@@ -3,16 +3,12 @@ import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 
 const SCRUB_VIDEO_SRC = `${import.meta.env.BASE_URL}hero-scrub.mp4`;
-const SENSITIVITY = 0.8;
-
 function useScrubVideo() {
   const videoRef = useRef(null);
   const state = useRef({
     targetTime: 0,
     currentLerpedTime: 0,
     isSeeking: false,
-    prevX: null,
-    latestX: null,
     duration: 0,
     rafId: 0,
   });
@@ -31,9 +27,9 @@ function useScrubVideo() {
     const seekIfNeeded = () => {
       if (!video.duration) return;
       if (state.current.isSeeking) return;
+      
       const diff = state.current.currentLerpedTime - video.currentTime;
-      // Optimization: Increase diff threshold slightly to avoid micro-stutters
-      if (Math.abs(diff) > 0.08) {
+      if (Math.abs(diff) > 0.02) { // Tighter threshold for closer following
         state.current.isSeeking = true;
         video.currentTime = state.current.currentLerpedTime;
       }
@@ -45,29 +41,19 @@ function useScrubVideo() {
     };
 
     const handleMouseMove = (e) => {
-      state.current.latestX = e.clientX / window.innerWidth;
+      if (state.current.duration) {
+        // Direct 1:1 mapping: Mouse X position maps exactly to video timeline
+        const progress = e.clientX / window.innerWidth;
+        state.current.targetTime = progress * state.current.duration;
+      }
     };
 
     const tick = () => {
       const s = state.current;
-      if (s.latestX !== null && s.duration) {
-        if (s.prevX === null) {
-          s.prevX = s.latestX;
-        } else {
-          const deltaX = s.latestX - s.prevX;
-          s.prevX = s.latestX;
 
-          if (deltaX !== 0) {
-            const timeOffset = deltaX * SENSITIVITY * s.duration;
-            const nextTarget = s.targetTime + timeOffset;
-            s.targetTime = Math.min(Math.max(nextTarget, 0), s.duration);
-          }
-        }
-      }
-
-      // Lerp for smooth scrubbing (optimized lerp factor)
+      // Lerp for snappy but buttery smooth follow
       if (s.duration) {
-        s.currentLerpedTime += (s.targetTime - s.currentLerpedTime) * 0.12;
+        s.currentLerpedTime += (s.targetTime - s.currentLerpedTime) * 0.15;
         seekIfNeeded();
       }
 
