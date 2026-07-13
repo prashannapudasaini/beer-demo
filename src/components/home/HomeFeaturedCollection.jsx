@@ -64,8 +64,6 @@ export default function HomeFeaturedCollection() {
                 <motion.img 
                   src={product.image} 
                   alt={product.name}
-                  animate={{ y: [0, -15, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 }}
                   className="relative z-10 h-full object-contain filter drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
                 />
               </div>

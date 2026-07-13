@@ -1,20 +1,9 @@
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 
 export default function HomeBrandStory() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 150]);
-
   return (
     <motion.section 
-      ref={containerRef} 
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -58,16 +47,13 @@ export default function HomeBrandStory() {
 
         {/* Right: Parallax Imagery */}
         <div className="relative h-[600px] lg:h-[800px] w-full hidden lg:block overflow-hidden rounded-l-3xl shadow-2xl">
-          <motion.div 
-            style={{ y: y1 }}
-            className="absolute -inset-10"
-          >
+          <div className="absolute -inset-10">
             <img 
               src="/beer_action.png" 
               alt="Beer Pouring"
               className="w-full h-full object-cover filter brightness-75"
             />
-          </motion.div>
+          </div>
 
         </div>
 

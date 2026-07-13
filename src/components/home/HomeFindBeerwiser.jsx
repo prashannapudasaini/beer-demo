@@ -14,8 +14,6 @@ export default function HomeFindBeerwiser() {
       <div className="absolute inset-0 z-0">
         <motion.img 
           initial={{ scale: 1.1 }}
-          animate={{ scale: 1.05, y: [0, -20, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           src="/mountain_spring.png" 
           alt="Water Background" 
           className="w-full h-full object-cover filter brightness-50"

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
 
 const SCRUB_VIDEO_SRC = `${import.meta.env.BASE_URL}hero-scrub.mp4`;
 const SENSITIVITY = 0.8;
@@ -31,7 +32,8 @@ function useScrubVideo() {
       if (!video.duration) return;
       if (state.current.isSeeking) return;
       const diff = state.current.currentLerpedTime - video.currentTime;
-      if (Math.abs(diff) > 0.05) {
+      // Optimization: Increase diff threshold slightly to avoid micro-stutters
+      if (Math.abs(diff) > 0.08) {
         state.current.isSeeking = true;
         video.currentTime = state.current.currentLerpedTime;
       }
@@ -62,10 +64,10 @@ function useScrubVideo() {
           }
         }
       }
-      
-      // Lerp for smooth scrubbing
+
+      // Lerp for smooth scrubbing (optimized lerp factor)
       if (s.duration) {
-        s.currentLerpedTime += (s.targetTime - s.currentLerpedTime) * 0.08;
+        s.currentLerpedTime += (s.targetTime - s.currentLerpedTime) * 0.12;
         seekIfNeeded();
       }
 
@@ -102,7 +104,7 @@ export default function Hero() {
 
   return (
     <main className="relative h-[100dvh] w-full overflow-hidden bg-black font-inter">
-      {/* Scrub Video Background */}
+      {/* Background Video */}
       <video
         ref={scrubVideoRef}
         muted
@@ -114,15 +116,19 @@ export default function Hero() {
 
       {/* Content Layer */}
       <div className="absolute inset-0 z-10 flex flex-col px-4 py-4 sm:px-10 sm:py-8 lg:px-12">
-        {/* Main Content (Bottom-aligned) */}
         {/* Spacer on mobile */}
         <div className="flex-1 sm:hidden" />
 
-        <div className="flex flex-col pb-4 sm:mt-auto sm:flex-1 sm:flex-row sm:items-end sm:pb-12 lg:pb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex flex-col pb-4 sm:mt-auto sm:flex-1 sm:flex-row sm:items-end sm:pb-12 lg:pb-16"
+        >
           {/* Left Column */}
           <div className="flex flex-col sm:max-w-[700px]">
             <h1 className="font-serif text-[2.5rem] leading-[1.05] tracking-tight text-white sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] drop-shadow-lg uppercase font-bold">
-              Wild Spirit.<br/>
+              Wild Spirit.<br />
               <span className="text-gold">Crafted Perfection.</span>
             </h1>
             <p className="mt-4 sm:mt-6 text-sm leading-relaxed text-white/80 sm:text-base md:text-lg max-w-[520px] font-sans font-medium">
@@ -176,7 +182,7 @@ export default function Hero() {
               Pure Craft
             </span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </main>
   );
