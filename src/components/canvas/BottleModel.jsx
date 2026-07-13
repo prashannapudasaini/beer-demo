@@ -10,7 +10,7 @@ export default function BottleModel(props) {
   const group = useRef();
 
   // Load the product image texture
-  const texture = useLoader(TextureLoader, '/hero1.png');
+  const texture = useLoader(TextureLoader, '/hero.png');
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {

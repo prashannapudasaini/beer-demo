@@ -47,7 +47,7 @@ export default function Navigation() {
             <Link
               key={link.name}
               to={link.href}
-              className="text-sm font-bold tracking-wide text-text-primary hover:text-gold drop-shadow-sm transition-colors duration-300 uppercase"
+              className="text-sm font-bold tracking-wide bg-gradient-to-r from-gold via-gold-dark to-gold bg-clip-text text-transparent hover:from-gold-highlight hover:via-gold hover:to-gold-highlight drop-shadow-sm transition-all duration-300 uppercase"
             >
               {link.name}
             </Link>
@@ -84,7 +84,7 @@ export default function Navigation() {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-sm font-bold tracking-wide text-text-primary hover:text-gold drop-shadow-sm transition-colors duration-300 uppercase"
+                className="text-sm font-bold tracking-wide bg-gradient-to-r from-gold via-gold-dark to-gold bg-clip-text text-transparent hover:from-gold-highlight hover:via-gold hover:to-gold-highlight drop-shadow-sm transition-all duration-300 uppercase"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.name}

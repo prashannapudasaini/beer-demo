@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, Preload } from '@react-three/drei';
 import { useLocation } from 'react-router-dom';
-import BottleModel from './BottleModel';
 import Particles from './Particles';
 
 export default function Scene() {
@@ -32,8 +31,7 @@ export default function Scene() {
       <Suspense fallback={null}>
         <Environment preset="studio" />
         
-        {/* Main Product (Only on Home Page) */}
-        {isHomePage && <BottleModel />}
+        {/* Main Product removed as requested */}
 
         {/* Ambient Particles */}
         <Particles count={200} />

@@ -1,83 +1,183 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from "react";
+import { Menu, X } from "lucide-react";
+
+const SCRUB_VIDEO_SRC = `${import.meta.env.BASE_URL}hero-scrub.mp4`;
+const SENSITIVITY = 0.8;
+
+function useScrubVideo() {
+  const videoRef = useRef(null);
+  const state = useRef({
+    targetTime: 0,
+    currentLerpedTime: 0,
+    isSeeking: false,
+    prevX: null,
+    latestX: null,
+    duration: 0,
+    rafId: 0,
+  });
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleLoadedMetadata = () => {
+      state.current.duration = video.duration || 0;
+      video.currentTime = 0;
+      state.current.targetTime = 0;
+      state.current.currentLerpedTime = 0;
+    };
+
+    const seekIfNeeded = () => {
+      if (!video.duration) return;
+      if (state.current.isSeeking) return;
+      const diff = state.current.currentLerpedTime - video.currentTime;
+      if (Math.abs(diff) > 0.05) {
+        state.current.isSeeking = true;
+        video.currentTime = state.current.currentLerpedTime;
+      }
+    };
+
+    const handleSeeked = () => {
+      state.current.isSeeking = false;
+      seekIfNeeded();
+    };
+
+    const handleMouseMove = (e) => {
+      state.current.latestX = e.clientX / window.innerWidth;
+    };
+
+    const tick = () => {
+      const s = state.current;
+      if (s.latestX !== null && s.duration) {
+        if (s.prevX === null) {
+          s.prevX = s.latestX;
+        } else {
+          const deltaX = s.latestX - s.prevX;
+          s.prevX = s.latestX;
+
+          if (deltaX !== 0) {
+            const timeOffset = deltaX * SENSITIVITY * s.duration;
+            const nextTarget = s.targetTime + timeOffset;
+            s.targetTime = Math.min(Math.max(nextTarget, 0), s.duration);
+          }
+        }
+      }
+      
+      // Lerp for smooth scrubbing
+      if (s.duration) {
+        s.currentLerpedTime += (s.targetTime - s.currentLerpedTime) * 0.08;
+        seekIfNeeded();
+      }
+
+      s.rafId = requestAnimationFrame(tick);
+    };
+
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("seeked", handleSeeked);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    state.current.rafId = requestAnimationFrame(tick);
+
+    return () => {
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("seeked", handleSeeked);
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(state.current.rafId);
+    };
+  }, []);
+
+  return videoRef;
+}
 
 export default function Hero() {
+  const [email, setEmail] = useState("");
+  const scrubVideoRef = useScrubVideo();
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (email) {
+      alert(`Subscribed with: ${email}`);
+      setEmail("");
+    }
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center pt-24" id="hero">
-      <div className="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Left Content */}
-        <div className="flex flex-col justify-center z-10 pointer-events-auto">
-          <div className="bg-surface/30 backdrop-blur-2xl border border-glass-border rounded-3xl p-10 md:p-14 shadow-[0_0_50px_rgba(212,175,55,0.1)] relative overflow-hidden">
-            {/* Subtle inner reflection */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold-highlight/30 to-transparent"></div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="mb-4"
-          >
-            <span className="inline-block px-3 py-1 border-2 border-gold text-gold drop-shadow-sm font-bold text-xs tracking-[0.2em] uppercase bg-surface/30 backdrop-blur-sm rounded-sm">
-              Premium Quality
+    <main className="relative h-[100dvh] w-full overflow-hidden bg-black font-inter">
+      {/* Scrub Video Background */}
+      <video
+        ref={scrubVideoRef}
+        muted
+        playsInline
+        preload="auto"
+        className="absolute inset-0 h-full w-full object-cover"
+        src={SCRUB_VIDEO_SRC}
+      />
+
+      {/* Content Layer */}
+      <div className="absolute inset-0 z-10 flex flex-col px-4 py-4 sm:px-10 sm:py-8 lg:px-12">
+        {/* Main Content (Bottom-aligned) */}
+        {/* Spacer on mobile */}
+        <div className="flex-1 sm:hidden" />
+
+        <div className="flex flex-col pb-4 sm:mt-auto sm:flex-1 sm:flex-row sm:items-end sm:pb-12 lg:pb-16">
+          {/* Left Column */}
+          <div className="flex flex-col sm:max-w-[700px]">
+            <h1 className="font-serif text-[2.5rem] leading-[1.05] tracking-tight text-white sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] drop-shadow-lg uppercase font-bold">
+              Wild Spirit.<br/>
+              <span className="text-gold">Crafted Perfection.</span>
+            </h1>
+            <p className="mt-4 sm:mt-6 text-sm leading-relaxed text-white/80 sm:text-base md:text-lg max-w-[520px] font-sans font-medium">
+              Unleash your inner husky with every crisp, refreshing sip. Brewed for the bold and the adventurous.
+            </p>
+
+            <form
+              onSubmit={handleSubscribe}
+              className="mt-6 sm:mt-8 relative flex w-full max-w-[400px] items-center rounded-sm border border-white/20 bg-black/40 backdrop-blur-md"
+            >
+              <input
+                type="email"
+                required
+                placeholder="Your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-transparent px-4 py-3 text-sm text-white placeholder:text-white/70 outline-none sm:px-6 sm:py-4 font-sans"
+              />
+
+              <button
+                type="submit"
+                className="absolute right-1.5 rounded-sm bg-gold px-3 py-2 text-xs font-bold text-primary sm:px-6 sm:py-3 sm:text-sm uppercase tracking-wider hover:bg-gold-highlight transition-colors duration-300"
+              >
+                Join the list
+              </button>
+            </form>
+
+            {/* Feature pills (mobile only) */}
+            <div className="mt-6 flex flex-wrap gap-2 sm:hidden">
+              <span className="rounded-sm border border-gold/30 bg-black/60 px-3 py-1.5 text-xs text-gold backdrop-blur-md uppercase tracking-wider font-bold">
+                Crisp Taste
+              </span>
+              <span className="rounded-sm border border-gold/30 bg-black/60 px-3 py-1.5 text-xs text-gold backdrop-blur-md uppercase tracking-wider font-bold">
+                Wild Spirit
+              </span>
+              <span className="rounded-sm border border-gold/30 bg-black/60 px-3 py-1.5 text-xs text-gold backdrop-blur-md uppercase tracking-wider font-bold">
+                Pure Craft
+              </span>
+            </div>
+          </div>
+
+          {/* Right Column (desktop only) */}
+          <div className="hidden sm:flex ml-auto flex-col items-end gap-2 self-end">
+            <span className="rounded-sm border border-gold/30 bg-black/60 px-4 py-2 text-sm text-gold backdrop-blur-md uppercase tracking-wider font-bold">
+              Crisp Taste
             </span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-6xl lg:text-7xl font-serif text-text-primary drop-shadow-sm font-bold leading-[1.1] mb-6 uppercase"
-          >
-            Crafted <br/>
-            To Refresh.<br/>
-            <span className="text-gold">Made To<br/>Be Remembered.</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="text-text-primary/80 text-lg md:text-xl max-w-md font-semibold leading-relaxed mb-10"
-          >
-            Brewed with the finest ingredients and a passion for quality. Experience the taste of true craftsmanship.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6"
-          >
-            <button className="px-8 py-4 bg-gradient-to-r from-gold-dark to-gold text-[#021A0F] shadow-lg shadow-gold/20 border border-gold-highlight/50 hover:brightness-110 hover:shadow-gold/40 font-bold tracking-widest text-sm uppercase transition-all duration-500 rounded-sm shadow-xl flex items-center gap-2">
-              Discover Our Beers <span className="text-lg">&rarr;</span>
-            </button>
-            <button className="px-8 py-4 border border-gold/50 text-gold drop-shadow-sm font-bold tracking-widest text-sm uppercase hover:bg-gold hover:text-black transition-all duration-500 rounded-sm flex items-center gap-2">
-              <span className="text-lg">&#9654;</span> Watch Video
-            </button>
-          </motion.div>
+            <span className="rounded-sm border border-gold/30 bg-black/60 px-4 py-2 text-sm text-gold backdrop-blur-md uppercase tracking-wider font-bold">
+              Wild Spirit
+            </span>
+            <span className="rounded-sm border border-gold/30 bg-black/60 px-4 py-2 text-sm text-gold backdrop-blur-md uppercase tracking-wider font-bold">
+              Pure Craft
+            </span>
           </div>
         </div>
-
-        {/* Right Side - Empty space for 3D Canvas which sits behind */}
-        <div className="hidden lg:block"></div>
       </div>
-      
-      {/* Scroll indicator */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center pointer-events-none"
-      >
-        <span className="text-[10px] font-bold tracking-widest uppercase text-text-primary/80 mb-4">Scroll</span>
-        <div className="w-[2px] h-12 bg-black/10 relative overflow-hidden">
-          <motion.div 
-            animate={{ y: [0, 48, 48] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="w-full h-1/2 bg-secondary absolute top-0"
-          />
-        </div>
-      </motion.div>
-    </section>
+    </main>
   );
 }
