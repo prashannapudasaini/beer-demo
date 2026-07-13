@@ -53,16 +53,9 @@ export default function Footer() {
 
       </div>
 
-      {/* Massive Background Text */}
-      <div className="w-full overflow-hidden flex justify-center pointer-events-none opacity-[0.03] select-none border-t border-glass-border/30 pt-4">
-        <h1 className="text-[15vw] font-serif font-black tracking-tighter leading-none whitespace-nowrap text-white">
-          BEERWISER
-        </h1>
-      </div>
-
       {/* Bottom: Copyright */}
-      <div className="absolute bottom-6 w-full text-center z-20">
-        <p className="text-text-primary/30 text-[10px] tracking-widest font-bold uppercase">
+      <div className="w-full text-center z-20 mt-8 pt-8 pb-6 border-t border-glass-border/10">
+        <p className="text-text-primary/40 text-[10px] tracking-widest font-bold uppercase">
           © 2026 BeerWiser. All Rights Reserved. Drink Responsibly.
         </p>
       </div>

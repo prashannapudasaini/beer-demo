@@ -10,7 +10,13 @@ const stats = [
 
 export default function HomeAwardsTrust() {
   return (
-    <section className="py-32 bg-surface/30 backdrop-blur-md border border-glass-border relative">
+    <motion.section 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="py-32 bg-surface/30 backdrop-blur-md border border-glass-border relative"
+    >
       <div className="max-w-7xl mx-auto px-6 text-center">
         <motion.h2 
           initial={{ opacity: 0, y: 30 }}
@@ -41,6 +47,6 @@ export default function HomeAwardsTrust() {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

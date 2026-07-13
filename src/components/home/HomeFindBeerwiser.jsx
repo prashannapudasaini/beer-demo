@@ -3,7 +3,13 @@ import { motion } from 'framer-motion';
 
 export default function HomeFindBeerwiser() {
   return (
-    <section className="py-40 relative overflow-hidden border-y border-glass-border">
+    <motion.section 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="py-40 relative overflow-hidden border-y border-glass-border"
+    >
       {/* Water Background Layer */}
       <div className="absolute inset-0 z-0">
         <motion.img 
@@ -49,6 +55,6 @@ export default function HomeFindBeerwiser() {
           </div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }

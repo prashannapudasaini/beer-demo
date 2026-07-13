@@ -13,7 +13,14 @@ export default function HomeBrandStory() {
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 150]);
 
   return (
-    <section ref={containerRef} className="relative min-h-[90vh] bg-transparent overflow-hidden flex items-center">
+    <motion.section 
+      ref={containerRef} 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="relative min-h-[90vh] bg-transparent overflow-hidden flex items-center"
+    >
       <div className="absolute inset-0 w-full h-full lg:w-1/2 z-0">
         {/* Left side is solid accent color */}
       </div>
@@ -65,6 +72,6 @@ export default function HomeBrandStory() {
         </div>
 
       </div>
-    </section>
+    </motion.section>
   );
 }

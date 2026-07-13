@@ -27,7 +27,13 @@ const products = [
 
 export default function HomeFeaturedCollection() {
   return (
-    <section className="py-32 bg-transparent relative overflow-hidden">
+    <motion.section 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="py-32 bg-transparent relative overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
@@ -78,6 +84,6 @@ export default function HomeFeaturedCollection() {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
