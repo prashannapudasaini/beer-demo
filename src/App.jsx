@@ -1,60 +1,29 @@
-import React, { useEffect, useRef } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-import Navigation from './components/Navigation';
-import Footer from './components/Footer';
-import ScrollToTop from './components/ScrollToTop';
-import Scene from './components/canvas/Scene';
-
-// Pages
-import Home from './pages/Home';
-import Story from './pages/Story';
-import Products from './pages/Products';
-import BlogPage from './pages/Blog';
-import SustainabilityPage from './pages/Sustainability';
-import ContactPage from './pages/Contact';
-
-gsap.registerPlugin(ScrollTrigger);
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar.jsx';
+import Footer from './components/Footer.jsx';
+import Home from './pages/Home.jsx';
+import Story from './pages/Story.jsx';
+import Collection from './pages/Collection.jsx';
+import Sustainability from './pages/Sustainability.jsx';
+import Blog from './pages/Blog.jsx';
+import Contact from './pages/Contact.jsx';
 
 function App() {
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    // Basic setup for smooth scrolling or general GSAP context
-    let ctx = gsap.context(() => {
-      // We can add global scroll triggers here if needed
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <div ref={containerRef} className="relative w-full bg-primary text-accent overflow-hidden">
-        {/* 3D Canvas Background Layer */}
-        <div className="fixed inset-0 z-0 pointer-events-none">
-          <Scene />
-        </div>
-
-        {/* Foreground UI Layer */}
-        <div className="relative z-10 flex flex-col min-h-screen">
-          <Navigation />
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/story" element={<Story />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/sustainability" element={<SustainabilityPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </div>
-    </BrowserRouter>
+    <div className="relative min-h-screen bg-bgPrimary text-textMain overflow-hidden">
+      <Navbar />
+      <main className="relative z-10 pt-20">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/story" element={<Story />} />
+          <Route path="/collection" element={<Collection />} />
+          <Route path="/sustainability" element={<Sustainability />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
   );
 }
 

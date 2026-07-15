@@ -1,32 +1,23 @@
-import React, { useEffect } from 'react';
-import SustainabilityHero from '../components/sustainability/SustainabilityHero';
-import Philosophy from '../components/sustainability/Philosophy';
-import Pillars from '../components/sustainability/Pillars';
-import WaterPreservation from '../components/sustainability/WaterPreservation';
-import ResponsibleBrewing from '../components/sustainability/ResponsibleBrewing';
-import SustainablePackaging from '../components/sustainability/SustainablePackaging';
-import OurImpact from '../components/sustainability/OurImpact';
-import CommunityEnvironment from '../components/sustainability/CommunityEnvironment';
-import FutureVision from '../components/sustainability/FutureVision';
-import SustainabilityCTA from '../components/sustainability/SustainabilityCTA';
+import React from 'react';
+import SustainHero from '../sections/sustainability/SustainHero.jsx';
+import SustainCommitment from '../sections/sustainability/SustainCommitment.jsx';
+import SustainImpact from '../sections/sustainability/SustainImpact.jsx';
+import SustainVision from '../sections/sustainability/SustainVision.jsx';
 
 export default function Sustainability() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
-    <main className="w-full relative z-10 overflow-hidden">
-      <SustainabilityHero />
-      <Philosophy />
-      <Pillars />
-      <WaterPreservation />
-      <ResponsibleBrewing />
-      <SustainablePackaging />
-      <OurImpact />
-      <CommunityEnvironment />
-      <FutureVision />
-      <SustainabilityCTA />
-    </main>
+    <div className="bg-bgPrimary min-h-screen">
+      {/* 1. Cinematic Hero */}
+      <SustainHero />
+
+      {/* 2. Our Commitment (Stacked Cards) */}
+      <SustainCommitment />
+
+      {/* 3. Impact in Numbers */}
+      <SustainImpact />
+
+      {/* 4. Future Vision & CTA */}
+      <SustainVision />
+    </div>
   );
 }

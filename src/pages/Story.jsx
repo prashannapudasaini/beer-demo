@@ -1,34 +1,27 @@
-import React, { useEffect } from 'react';
-import StoryHero from '../components/story/StoryHero';
-import TheBeginning from '../components/story/TheBeginning';
-import OurPhilosophy from '../components/story/OurPhilosophy';
-import MountainToBottle from '../components/story/MountainToBottle';
-import MountainsInspireUs from '../components/story/MountainsInspireUs';
-import OurCommitment from '../components/story/OurCommitment';
-import BeerwiserExperience from '../components/story/BeerwiserExperience';
-import StatisticsSection from '../components/story/StatisticsSection';
-import FinalBrandStatement from '../components/story/FinalBrandStatement';
-import FinalCTA from '../components/story/FinalCTA';
+import React from 'react';
+import StoryIntro from '../sections/story/StoryIntro.jsx';
+import StoryJourney from '../sections/story/StoryJourney.jsx';
+import StoryBeliefs from '../sections/story/StoryBeliefs.jsx';
+import StoryProcess from '../sections/story/StoryProcess.jsx';
+import StoryVision from '../sections/story/StoryVision.jsx';
 
 export default function Story() {
-
-  // Scroll to top on mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
-    <div className="relative min-h-screen">
-      <StoryHero />
-      <TheBeginning />
-      <OurPhilosophy />
-      <MountainToBottle />
-      <MountainsInspireUs />
-      <OurCommitment />
-      <BeerwiserExperience />
-      <StatisticsSection />
-      <FinalBrandStatement />
-      <FinalCTA />
+    <div className="bg-bgPrimary min-h-screen">
+      {/* 1. Cinematic Intro */}
+      <StoryIntro />
+      
+      {/* 2. Our Journey (Horizontal Timeline) */}
+      <StoryJourney />
+
+      {/* 3. What We Believe (Pinned Stacked Cards) */}
+      <StoryBeliefs />
+
+      {/* 4. The Making of Excellence (Split Screen) */}
+      <StoryProcess />
+
+      {/* 5. Future Vision + CTA */}
+      <StoryVision />
     </div>
   );
 }

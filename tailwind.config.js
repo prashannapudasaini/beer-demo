@@ -7,27 +7,29 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#001830',
-        'surface': '#001028',
-        'secondary-surface': '#082040',
-        'accent-green': '#143D73',
-        'gold': '#D4AF37',
-        'gold-dark': '#B8860B',
-        'gold-highlight': '#F4D03F',
-        'text-primary': '#F8F8F8',
-        'glass-border': 'rgba(212,175,55,0.15)',
-        
-        // Aliases to avoid completely breaking unmodified components before migration script runs
-        'secondary': '#D4AF37', 
-        'accent': '#F8F8F8',
-        'supporting': 'rgba(248,248,248,0.7)',
+        bgPrimary: '#050816',
+        bgSecondary: '#0b1020',
+        surface: '#101827',
+        accentBlue: '#00a8ff',
+        electricBlue: '#38bdf8',
+        premiumSilver: '#c0c7d1',
+        gunmetal: '#6b7280',
+        orangeFlame: '#ff6b00',
+        goldHighlight: '#fbbf24',
+        textMain: '#ffffff',
+        textSecondary: '#94a3b8',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        heading: ['"Bebas Neue"', 'sans-serif'],
+        body: ['Manrope', 'sans-serif'],
       },
       backgroundImage: {
-        'glass-gradient': 'linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01))',
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-glow': 'radial-gradient(circle at center, rgba(56,189,248,0.15) 0%, transparent 70%)',
+      },
+      boxShadow: {
+        'glow-blue': '0 0 30px rgba(0, 168, 255, 0.3)',
+        'glow-orange': '0 0 30px rgba(255, 107, 0, 0.3)',
       }
     },
   },
