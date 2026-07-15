@@ -7,10 +7,12 @@ import Collection from './pages/Collection.jsx';
 import Sustainability from './pages/Sustainability.jsx';
 import Blog from './pages/Blog.jsx';
 import Contact from './pages/Contact.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 function App() {
   return (
     <div className="relative min-h-screen bg-bgPrimary text-textMain overflow-hidden">
+      <ScrollToTop />
       <Navbar />
       <main className="relative z-10 pt-20">
         <Routes>

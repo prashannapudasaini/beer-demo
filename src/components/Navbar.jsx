@@ -43,6 +43,14 @@ export default function Navbar() {
 
   const isActive = (path) => location.pathname === path ? "text-accentBlue" : "text-white hover:text-gray-300";
 
+  const handleNavClick = (e, path) => {
+    if (location.pathname === path) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    setMenuOpen(false);
+  };
+
   return (
     <>
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'py-4 bg-bgPrimary/90 backdrop-blur-md shadow-lg' : 'py-6 bg-transparent'}`}>
@@ -55,7 +63,12 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-8 font-body text-sm font-semibold tracking-[0.2em] uppercase">
             {navLinks.map((link) => (
-              <Link key={link.path} to={link.path} className={`transition-colors relative group ${isActive(link.path)}`}>
+              <Link 
+                key={link.path} 
+                to={link.path} 
+                onClick={(e) => handleNavClick(e, link.path)}
+                className={`transition-colors relative group ${isActive(link.path)}`}
+              >
                 {link.name}
                 <span className="absolute -bottom-2 left-0 w-full h-[2px] bg-accentBlue scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
               </Link>
@@ -87,6 +100,7 @@ export default function Navbar() {
               <Link 
                 key={link.path} 
                 to={link.path} 
+                onClick={(e) => handleNavClick(e, link.path)}
                 className={`mobile-link font-heading text-4xl uppercase tracking-widest ${isActive(link.path)}`}
               >
                 {link.name}

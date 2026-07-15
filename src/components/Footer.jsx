@@ -13,12 +13,12 @@ export default function Footer() {
         </div>
         
         <div className="flex flex-wrap justify-center gap-8 font-body text-sm font-semibold uppercase tracking-widest text-textSecondary">
-          <Link to="/" className="hover:text-white transition-colors">Home</Link>
-          <Link to="/story" className="hover:text-white transition-colors">Story</Link>
-          <Link to="/collection" className="hover:text-white transition-colors">Collection</Link>
-          <Link to="/sustainability" className="hover:text-white transition-colors">Sustainability</Link>
-          <Link to="/blog" className="hover:text-white transition-colors">Blog</Link>
-          <Link to="/contact" className="hover:text-white transition-colors">Contact</Link>
+          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-white transition-colors">Home</Link>
+          <Link to="/story" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-white transition-colors">Story</Link>
+          <Link to="/collection" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-white transition-colors">Collection</Link>
+          <Link to="/sustainability" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-white transition-colors">Sustainability</Link>
+          <Link to="/blog" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-white transition-colors">Blog</Link>
+          <Link to="/contact" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-white transition-colors">Contact</Link>
         </div>
       </div>
     </footer>
